@@ -19,18 +19,10 @@ architectures:
 apps:
   android-studio:
     command: android-studio/bin/studio.sh
-    desktop: jetbrains-studio.desktop
 
 parts:
-  desktop:
-    after:
-      - android-studio
-    plugin: dump
-    source: .
-    prime:
-      - jetbrains-studio.desktop
   android-studio:
-    plugin: dump
+    plugin: nil
     source: .
     override-build: |
       snapcraftctl build
@@ -45,7 +37,6 @@ parts:
       rm "${SNAPCRAFT_PART_INSTALL}/android-studio.tar.gz"
 
       # Set version
-      snapcraftctl build
       snapcraftctl set-version $(echo $RELEASE_INFO | cut -d ' ' -f1)
     build-packages:
       - wget
